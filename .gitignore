@@ -1,0 +1,6 @@
+### IntelliJ IDEA ###
+.idea/*
+target/*
+
+### Mac OS ###
+.DS_Storegit
