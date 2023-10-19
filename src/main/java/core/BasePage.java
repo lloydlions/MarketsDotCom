@@ -67,4 +67,9 @@ public class BasePage extends DriverManager{
         waitThisElement(locator);
         return driver.findElement(locator).getText();
     }
+
+    public static void webdriverQuit(){
+        driver.close();
+        driver.quit();
+    }
 }

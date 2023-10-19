@@ -1,12 +1,16 @@
-package sample;
+package test;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import pages.CountryResidencePage;
 import pages.MainPage;
 import pages.PlatformPage;
 import pages.TradingExperience;
+import testdata.testdata_one;
 import utilities.HelperClass;
+
+import static core.BasePage.webdriverQuit;
 
 public class Testcase {
     MainPage mainPage;
@@ -14,8 +18,8 @@ public class Testcase {
     CountryResidencePage countryResidencePage;
     TradingExperience tradingExperience;
 
-    @Test
-    public void testOne() throws InterruptedException {
+    @Test(dataProvider = "data-provider", dataProviderClass= testdata_one.class)
+    public void testOne(String email, String password) throws InterruptedException {
 
         mainPage = new MainPage();
         platformPage = new PlatformPage();
@@ -26,7 +30,7 @@ public class Testcase {
 
         mainPage.clickTradingPlatformLink();
         Assert.assertEquals(platformPage.getTitle(),"What is the best online trading platform");
-        platformPage.fillUp(HelperClass.reformatEmail("test@test.com"),"Test123!");
+        platformPage.fillUp(HelperClass.reformatEmail(email),password);
 
         countryResidencePage = new CountryResidencePage(platformPage.getWindowHandle());
         Assert.assertEquals(countryResidencePage.getTitle(),"markets.com Account Registration");
@@ -40,8 +44,11 @@ public class Testcase {
         Assert.assertEquals(tradingExperience.getPageHeader("Trade Frequency"),"Votre fréquence de trading au cours des 2 dernières années :");
         tradingExperience.selectFrequency("Daily");
         Assert.assertEquals(tradingExperience.getPageHeader("Trading Purpose"),"Objectif et nature de votre trading :");
+    }
 
-
+    @AfterTest
+    public void cleanUp(){
+        webdriverQuit();
     }
 
 }

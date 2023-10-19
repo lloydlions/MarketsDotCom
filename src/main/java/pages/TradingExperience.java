@@ -48,11 +48,10 @@ public class TradingExperience extends BasePage {
         }
     }
     public String getPageHeader(String identifier){
-
+        HelperClass.sleep();
         String res = "";
         switch (identifier){
             case "Trading Experience":
-                HelperClass.sleep();
                 res = getTextFromElement(tradeExperienceQuestion);
                 break;
             case "Trading Purpose":
